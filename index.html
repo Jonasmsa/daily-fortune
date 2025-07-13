@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daily Fortune</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: #f0f8ff;
+    }
+    .fortune {
+      font-size: 1.5rem;
+      max-width: 600px;
+      text-align: center;
+      padding: 1em;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="fortune" id="fortune">
+    Loading your daily fortune...
+  </div>
+
+  <script>
+    const fortunes = [
+      "Today is a great day to start something new.",
+      "A fresh perspective will lead to success.",
+      "Unexpected good news will arrive soon.",
+      "Trust your intuition—it’s stronger than you think.",
+      "Patience is the key to joy today.",
+      "A smile is your best tool today.",
+      "Something you lost will soon be found.",
+      "You’ll meet someone inspiring today."
+    ];
+
+    // Use current date to get a consistent fortune for the day
+    const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+    let seed = today.split("-").join(""); // Remove dashes
+
+    function seededRandom(seed) {
+      let x = Math.sin(seed) * 10000;
+      return x - Math.floor(x);
+    }
+
+    const index = Math.floor(seededRandom(seed) * fortunes.length);
+    const fortune = fortunes[index];
+
+    document.getElementById("fortune").textContent = fortune;
+  </script>
+</body>
+</html>
