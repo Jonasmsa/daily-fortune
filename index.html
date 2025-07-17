@@ -15,7 +15,7 @@
     body {
       font-family: 'Georgia', serif;
       margin: 0;
-      padding: 0 1em;
+      padding: 0 1em; /* Seitenabstände */
       background: var(--bg);
       display: flex;
       flex-direction: column;
@@ -43,6 +43,65 @@
       margin: 0.5em 0;
     }
 
+    .cookie {
+      width: 150px;
+      height: 150px;
+      background: radial-gradient(circle at center, #f5deb3 60%, #d2b48c 100%);
+      border-radius: 50% 50% 45% 45% / 60% 60% 40% 40%;
+      box-shadow: inset -5px -5px 8px #c2a673, inset 5px 5px 8px #f6dfb4;
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.3s ease;
+      margin: 2em 0 1em 0;
+    }
+
+    .cookie::before, .cookie::after {
+      content: '';
+      position: absolute;
+      background: #d2b48c;
+      border-radius: 2px;
+    }
+    .cookie::before {
+      width: 3px;
+      height: 60px;
+      left: 50%;
+      top: 40px;
+      transform: translateX(-50%) rotate(15deg);
+      box-shadow: 1px 1px 0 #c7ad76;
+    }
+    .cookie::after {
+      width: 3px;
+      height: 45px;
+      left: 50%;
+      top: 80px;
+      transform: translateX(-50%) rotate(-15deg);
+      box-shadow: 1px 1px 0 #c7ad76;
+    }
+
+    .cookie:hover {
+      transform: scale(1.05);
+    }
+
+    /* Animation beim Öffnen */
+    .breaking {
+      animation: breakOpen 0.6s forwards;
+    }
+
+    @keyframes breakOpen {
+      0% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+      }
+      50% {
+        transform: scale(1.1) rotate(15deg);
+        opacity: 0.7;
+      }
+      100% {
+        opacity: 0;
+        transform: scale(1.2) rotate(45deg);
+      }
+    }
+
     .fortune-strip {
       background: var(--accent);
       border: 1px solid #ddd;
@@ -57,13 +116,13 @@
       margin-top: 2.5em;
       box-sizing: border-box;
       opacity: 0;
-      animation: fadeIn 1.2s ease-out forwards;
+      transition: opacity 1s ease-in;
+      min-height: 3.5em; /* Platz halten */
+      user-select: none;
     }
 
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-      }
+    .fortune-strip.visible {
+      opacity: 1;
     }
 
     .footer {
@@ -85,15 +144,25 @@
       text-decoration: underline;
     }
 
+    .instructions {
+      font-size: 1rem;
+      color: #666;
+      margin-top: 0;
+      user-select: none;
+    }
+
     @media (max-width: 480px) {
       .fortune-strip {
         font-size: 1.1rem;
         padding: 1em;
       }
-
       .top-message {
         font-size: 0.95rem;
         padding: 1em;
+      }
+      .cookie {
+        width: 120px;
+        height: 120px;
       }
     }
   </style>
@@ -104,6 +173,9 @@
     <p>Diese Botschaft gehört zu einem handgemachten Keramik-Glückskeks. Sie ändert sich täglich und enthält jeden Tag einen neuen Spruch.</p>
     <p>This message is linked to a handmade ceramic fortune cookie. It changes every day and reveals a new fortune.</p>
   </div>
+
+  <div class="cookie" id="cookie" title="Klicke mich, um den Spruch zu sehen"></div>
+  <p class="instructions" id="instructions">Klicke auf den Keks, um deinen Glücksspruch zu öffnen.</p>
 
   <div class="fortune-strip" id="fortune">
     Wird geladen ...
@@ -147,8 +219,23 @@
     const index = Math.floor(seededRandom(seed) * fortunes.length);
     const fortune = fortunes[index];
 
-    const fortuneElement = document.getElementById("fortune");
-    fortuneElement.textContent = fortune;
+    const cookie = document.getElementById('cookie');
+    const fortuneDiv = document.getElementById('fortune');
+    const instructions = document.getElementById('instructions');
+
+    // Initial verstecken
+    fortuneDiv.style.opacity = '0';
+
+    cookie.addEventListener('click', () => {
+      cookie.classList.add('breaking');
+
+      setTimeout(() => {
+        cookie.style.display = 'none';
+        instructions.style.display = 'none';
+        fortuneDiv.textContent = fortune;
+        fortuneDiv.classList.add('visible');
+      }, 600);
+    });
   </script>
 
 </body>
