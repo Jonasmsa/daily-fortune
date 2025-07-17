@@ -41,3 +41,80 @@
       color: #222;
       max-width: 90%;
       text-align: center;
+      margin-top: 3em;
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 10px;
+      right: 20px;
+      font-size: 0.85rem;
+      color: #666;
+      text-align: right;
+    }
+
+    .footer a {
+      color: #666;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-message">
+    <p>Diese Botschaft gehört zu einem handgemachten Keramik-Glückskeks. Sie ändert sich täglich und enthält jeden Tag einen neuen Spruch.</p>
+    <p>This message is linked to a handmade ceramic fortune cookie. It changes every day and reveals a new fortune.</p>
+  </div>
+
+  <div class="fortune-strip" id="fortune">
+    Wird geladen ...
+  </div>
+
+  <div class="footer">
+    Jonas Saling<br>
+    <a href="mailto:jonas.m.saling@gmail.com">jonas.m.saling@gmail.com</a>
+  </div>
+
+  <script>
+    const fortunes = [
+      "Sie haben keine Probleme",
+      "Was hast du hier drin erwartet? 😂",
+      "Der Sinn hat keinen Satz gemacht",
+      "Wenn die Affen steigen, gibt’s Regenwetter",
+      "Wer viel anfängt, muss auch viel zu Ende bringen",
+      "Der Friedhof der guten Ideen ist mehr als überfüllt.",
+      "Es ist ein großer Vorteil im Leben, die Fehler, aus denen man lernen kann, möglichst früh zu begehen.",
+      "When everything seems to be going against you, remember that the aeroplane takes off against the wind, not with it.",
+      "Mit einem Brunnenfrosch kann man nicht über den Ozean reden, er ist beschränkt auf sein Loch.",
+      "Wer guckt will auch was sehen.",
+      "Frühstück ist dann, wenn man aufsteht.",
+      "Alles passiert immer aus einem bestimmten Hund ☝🏻🐶",
+      "Wer zuletzt lacht, steht auf der Leitung.",
+      "Warning: The person behind you is secretly plotting to steal your cookie.",
+      "⁠Error: Fortune not found. Try reloading your cookie.",
+      "Nicht zum Verzehr geeignet",
+      "Wir können die Richtung des Windes nicht ändern, aber wir können die Segel anders setzen.",
+      "Hilf mir, ich bin in einer Glückskeks-Fabrik gefangen!"
+    ];
+
+    // Verwende das aktuelle Datum als Seed
+    const today = new Date().toISOString().slice(0, 10);
+    const seed = parseInt(today.replace(/-/g, ""), 10);
+
+    function seededRandom(seed) {
+      const x = Math.sin(seed) * 10000;
+      return x - Math.floor(x);
+    }
+
+    const index = Math.floor(seededRandom(seed) * fortunes.length);
+    const fortune = fortunes[index];
+
+    document.getElementById("fortune").textContent = fortune;
+  </script>
+
+</body>
+</html>
