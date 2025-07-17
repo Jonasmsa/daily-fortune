@@ -1,174 +1,162 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Täglicher Glückskeks</title>
-  <style>
-    :root {
-      --bg: #fef8ef;
-      --text: #222;
-      --light: #fff;
-      --accent: #fffdf6;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Täglicher Glückskeks</title>
+<style>
+  :root {
+    --bg: #fef8ef;
+    --text: #222;
+    --light: #fff;
+    --accent: #fffdf6;
+  }
 
-    body {
-      font-family: 'Georgia', serif;
-      margin: 0;
-      padding: 0 1em;
-      background: var(--bg);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      min-height: 100vh;
-      box-sizing: border-box;
-      position: relative;
-    }
+  body {
+    font-family: 'Georgia', serif;
+    margin: 0;
+    padding: 1em;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+    position: relative;
+  }
 
-    .top-message {
-      width: 100%;
-      max-width: 700px;
-      background: var(--light);
-      padding: 1.5em;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-      font-size: 1rem;
-      color: #444;
-      text-align: center;
-      margin-top: 1em;
-      border-radius: 10px;
-      box-sizing: border-box;
-    }
+  .top-message {
+    width: 100%;
+    max-width: 700px;
+    background: var(--light);
+    padding: 1.5em;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    font-size: 1rem;
+    color: #444;
+    text-align: center;
+    margin-top: 1em;
+    border-radius: 10px;
+    box-sizing: border-box;
+  }
 
-    .top-message p {
-      margin: 0.5em 0;
-    }
+  .top-message p {
+    margin: 0.5em 0;
+  }
 
-    .cookie {
-      width: 150px;
-      height: 150px;
-      background: radial-gradient(circle at center, #f5deb3 60%, #d2b48c 100%);
-      border-radius: 50% 50% 45% 45% / 60% 60% 40% 40%;
-      box-shadow: inset -5px -5px 8px #c2a673, inset 5px 5px 8px #f6dfb4;
-      cursor: pointer;
-      position: relative;
-      transition: transform 0.3s ease;
-      margin: 2em 0 1em 0;
-      user-select: none;
-    }
+  /* Glückskeks Container */
+  .fortune-cookie {
+    position: relative;
+    width: 140px;
+    height: 90px;
+    margin: 3em auto 1em auto;
+    cursor: pointer;
+    perspective: 800px;
+  }
 
-    .cookie::before, .cookie::after {
-      content: '';
-      position: absolute;
-      background: #d2b48c;
-      border-radius: 2px;
-    }
-    .cookie::before {
-      width: 3px;
-      height: 60px;
-      left: 50%;
-      top: 40px;
-      transform: translateX(-50%) rotate(15deg);
-      box-shadow: 1px 1px 0 #c7ad76;
-    }
-    .cookie::after {
-      width: 3px;
-      height: 45px;
-      left: 50%;
-      top: 80px;
-      transform: translateX(-50%) rotate(-15deg);
-      box-shadow: 1px 1px 0 #c7ad76;
-    }
+  /* Flügel */
+  .wing-left, .wing-right {
+    position: absolute;
+    width: 70px;
+    height: 90px;
+    background: linear-gradient(135deg, #f3c97d, #dca14b);
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.25);
+    top: 0;
+    border-radius: 70px / 90px;
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease;
+  }
 
-    .cookie:hover {
-      transform: scale(1.05);
-    }
+  .wing-left {
+    left: 0;
+    border-radius: 70px 0 0 70px / 90px 0 0 90px;
+    box-shadow: inset -5px 0 15px rgba(0,0,0,0.3);
+    transform-origin: right center;
+    transform: rotateY(0deg);
+  }
 
-    /* Animation beim Öffnen */
-    .breaking {
-      animation: breakOpen 0.6s forwards;
-    }
+  .wing-right {
+    right: 0;
+    border-radius: 0 70px 70px 0 / 0 90px 90px 0;
+    box-shadow: inset 5px 0 15px rgba(0,0,0,0.3);
+    transform-origin: left center;
+    transform: rotateY(0deg);
+  }
 
-    @keyframes breakOpen {
-      0% {
-        opacity: 1;
-        transform: scale(1) rotate(0deg);
-      }
-      50% {
-        transform: scale(1.1) rotate(15deg);
-        opacity: 0.7;
-      }
-      100% {
-        opacity: 0;
-        transform: scale(1.2) rotate(45deg);
-      }
-    }
+  /* Offen / aufgeklappt */
+  .fortune-cookie.opened .wing-left {
+    transform: rotateY(-35deg);
+  }
 
+  .fortune-cookie.opened .wing-right {
+    transform: rotateY(35deg);
+  }
+
+  /* Spruch */
+  .fortune-strip {
+    max-width: 700px;
+    background: var(--accent);
+    border: 1px solid #ddd;
+    padding: 1.5em 2em;
+    border-radius: 10px;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.08);
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--text);
+    text-align: center;
+    margin-top: 2em;
+    box-sizing: border-box;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.8s ease, max-height 0.8s ease;
+  }
+
+  /* Sichtbar wenn geöffnet */
+  .fortune-strip.visible {
+    opacity: 1;
+    max-height: 300px; /* genug Platz */
+  }
+
+  /* Kontakt unten rechts fixieren */
+  .footer {
+    position: fixed;
+    bottom: 10px;
+    right: 20px;
+    font-size: 0.85rem;
+    color: #666;
+    text-align: right;
+    user-select: none;
+  }
+
+  .footer a {
+    color: #666;
+    text-decoration: none;
+  }
+
+  .footer a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 480px) {
     .fortune-strip {
-      background: var(--accent);
-      border: 1px solid #ddd;
-      padding: 1.2em 1.5em;
-      border-radius: 10px;
-      box-shadow: 2px 2px 8px rgba(0,0,0,0.08);
-      font-size: 1.3rem;
-      font-weight: 500;
-      color: var(--text);
-      max-width: 90%;
-      text-align: center;
-      margin-top: 2.5em;
-      box-sizing: border-box;
-      opacity: 0;
-      transition: opacity 1s ease-in;
-      min-height: 3.5em; /* Platzhalter */
-      user-select: none;
+      font-size: 1.1rem;
+      padding: 1em;
     }
-
-    .fortune-strip.visible {
-      opacity: 1;
+    .top-message {
+      font-size: 0.95rem;
+      padding: 1em;
     }
-
-    .footer {
-      position: fixed;
-      bottom: 10px;
-      right: 20px;
-      font-size: 0.85rem;
-      color: #666;
-      text-align: right;
-      user-select: none;
-      max-width: 300px;
+    .fortune-cookie {
+      width: 120px;
+      height: 75px;
     }
-
-    .footer a {
-      color: #666;
-      text-decoration: none;
+    .wing-left, .wing-right {
+      width: 60px;
+      height: 75px;
+      border-radius: 60px / 75px;
     }
-
-    .footer a:hover {
-      text-decoration: underline;
-    }
-
-    .instructions {
-      font-size: 1rem;
-      color: #666;
-      margin-top: 0;
-      user-select: none;
-    }
-
-    @media (max-width: 480px) {
-      .fortune-strip {
-        font-size: 1.1rem;
-        padding: 1em;
-      }
-      .top-message {
-        font-size: 0.95rem;
-        padding: 1em;
-      }
-      .cookie {
-        width: 120px;
-        height: 120px;
-      }
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
 
@@ -177,70 +165,67 @@
     <p>This message is linked to a handmade ceramic fortune cookie. It changes every day and reveals a new fortune.</p>
   </div>
 
-  <div class="cookie" id="cookie" title="Klicke mich, um den Spruch zu sehen"></div>
-  <p class="instructions" id="instructions">Klicke auf den Keks, um deinen Glücksspruch zu öffnen.</p>
-
-  <div class="fortune-strip" id="fortune">
-    Wird geladen ...
+  <div class="fortune-cookie folded" id="cookie">
+    <div class="wing-left"></div>
+    <div class="wing-right"></div>
   </div>
+
+  <div class="fortune-strip" id="fortune">Klick den Keks, um deinen Spruch zu sehen!</div>
 
   <div class="footer">
     Jonas Saling<br>
     <a href="mailto:jonas.m.saling@gmail.com">jonas.m.saling@gmail.com</a>
   </div>
 
-  <script>
-    const fortunes = [
-      "Sie haben keine Probleme",
-      "Was hast du hier drin erwartet? 😂",
-      "Der Sinn hat keinen Satz gemacht",
-      "Wenn die Affen steigen, gibt’s Regenwetter",
-      "Wer viel anfängt, muss auch viel zu Ende bringen",
-      "Der Friedhof der guten Ideen ist mehr als überfüllt.",
-      "Es ist ein großer Vorteil im Leben, die Fehler, aus denen man lernen kann, möglichst früh zu begehen.",
-      "When everything seems to be going against you, remember that the aeroplane takes off against the wind, not with it.",
-      "Mit einem Brunnenfrosch kann man nicht über den Ozean reden, er ist beschränkt auf sein Loch.",
-      "Wer guckt will auch was sehen.",
-      "Frühstück ist dann, wenn man aufsteht.",
-      "Alles passiert immer aus einem bestimmten Hund ☝🏻🐶",
-      "Wer zuletzt lacht, steht auf der Leitung.",
-      "Warning: The person behind you is secretly plotting to steal your cookie.",
-      "⁠Error: Fortune not found. Try reloading your cookie.",
-      "Nicht zum Verzehr geeignet",
-      "Wir können die Richtung des Windes nicht ändern, aber wir können die Segel anders setzen.",
-      "Hilf mir, ich bin in einer Glückskeks-Fabrik gefangen!"
-    ];
+<script>
+  const fortunes = [
+    "Sie haben keine Probleme",
+    "Was hast du hier drin erwartet? 😂",
+    "Der Sinn hat keinen Satz gemacht",
+    "Wenn die Affen steigen, gibt’s Regenwetter",
+    "Wer viel anfängt, muss auch viel zu Ende bringen",
+    "Der Friedhof der guten Ideen ist mehr als überfüllt.",
+    "Es ist ein großer Vorteil im Leben, die Fehler, aus denen man lernen kann, möglichst früh zu begehen.",
+    "When everything seems to be going against you, remember that the aeroplane takes off against the wind, not with it.",
+    "Mit einem Brunnenfrosch kann man nicht über den Ozean reden, er ist beschränkt auf sein Loch.",
+    "Wer guckt will auch was sehen.",
+    "Frühstück ist dann, wenn man aufsteht.",
+    "Alles passiert immer aus einem bestimmten Hund ☝🏻🐶",
+    "Wer zuletzt lacht, steht auf der Leitung.",
+    "Warning: The person behind you is secretly plotting to steal your cookie.",
+    "⁠Error: Fortune not found. Try reloading your cookie.",
+    "Nicht zum Verzehr geeignet",
+    "Wir können die Richtung des Windes nicht ändern, aber wir können die Segel anders setzen.",
+    "Hilf mir, ich bin in einer Glückskeks-Fabrik gefangen!"
+  ];
 
-    const today = new Date().toISOString().slice(0, 10);
-    const seed = parseInt(today.replace(/-/g, ""), 10);
+  const fortuneDiv = document.getElementById('fortune');
+  const cookie = document.getElementById('cookie');
 
-    function seededRandom(seed) {
-      const x = Math.sin(seed) * 10000;
-      return x - Math.floor(x);
+  // Seed für Tages-Spruch (Datum als Zahl)
+  const today = new Date().toISOString().slice(0, 10);
+  const seed = parseInt(today.replace(/-/g, ''), 10);
+
+  function seededRandom(seed) {
+    const x = Math.sin(seed) * 10000;
+    return x - Math.floor(x);
+  }
+
+  // Index aus Seed
+  const index = Math.floor(seededRandom(seed) * fortunes.length);
+  const dailyFortune = fortunes[index];
+
+  // Anfangszustand
+  fortuneDiv.textContent = "Klick den Keks, um deinen Spruch zu sehen!";
+
+  cookie.addEventListener('click', () => {
+    if (!cookie.classList.contains('opened')) {
+      cookie.classList.add('opened');
+      fortuneDiv.textContent = dailyFortune;
+      fortuneDiv.classList.add('visible');
     }
-
-    const index = Math.floor(seededRandom(seed) * fortunes.length);
-    const fortune = fortunes[index];
-
-    const cookie = document.getElementById('cookie');
-    const fortuneDiv = document.getElementById('fortune');
-    const instructions = document.getElementById('instructions');
-
-    // Spruch zuerst unsichtbar
-    fortuneDiv.style.opacity = '0';
-
-    cookie.addEventListener('click', () => {
-      cookie.classList.add('breaking');
-      cookie.style.pointerEvents = 'none'; // Doppelklick verhindern
-
-      setTimeout(() => {
-        cookie.style.display = 'none';
-        instructions.style.display = 'none';
-        fortuneDiv.textContent = fortune;
-        fortuneDiv.classList.add('visible');
-      }, 600);
-    });
-  </script>
+  });
+</script>
 
 </body>
 </html>
