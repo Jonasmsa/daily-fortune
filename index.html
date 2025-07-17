@@ -43,11 +43,11 @@
     margin: 0.5em 0;
   }
 
-  /* Glückskeks Bild und Spruch - gleiche Größe und Position */
+  /* Bild und Spruch - gleiche Größe und Margin */
   #cookie-img, 
   #fortune {
     width: 500px;
-    margin: 3em auto 0.5em auto;
+    margin: 3em auto; /* oben und unten 3em Abstand */
     user-select: none;
     text-align: center;
     box-sizing: border-box;
@@ -78,8 +78,8 @@
     pointer-events: none;
   }
 
-  /* Spruch */
-  #fortune {
+  /* Spruch Styling */
+  .fortune-strip {
     background: var(--accent);
     border: 1px solid #ddd;
     padding: 1.5em 2em;
@@ -94,7 +94,7 @@
   }
 
   /* Sichtbar wenn geöffnet */
-  #fortune.visible {
+  .fortune-strip.visible {
     opacity: 1;
     max-height: 300px;
   }
@@ -123,9 +123,9 @@
     #cookie-img, 
     #fortune {
       width: 240px;
-      margin: 2em auto 0.5em auto;
+      margin: 2em auto;
     }
-    #fortune {
+    .fortune-strip {
       font-size: 1.1rem;
       padding: 1em;
     }
@@ -198,7 +198,7 @@
     // Bild & Text ausblenden
     cookieImg.classList.add('hidden');
     clickText.classList.add('hidden');
-    // Spruch anzeigen an gleicher Stelle
+    // Spruch anzeigen
     fortuneDiv.textContent = dailyFortune;
     fortuneDiv.classList.add('visible');
   });
