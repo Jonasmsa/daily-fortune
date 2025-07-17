@@ -43,14 +43,21 @@
     margin: 0.5em 0;
   }
 
-  /* Glückskeks Bild */
-  #cookie-img {
+  /* Glückskeks Bild und Spruch - gleiche Größe und Position */
+  #cookie-img, 
+  #fortune {
     width: 500px;
-    height: auto;
     margin: 3em auto 0.5em auto;
+    user-select: none;
+    text-align: center;
+    box-sizing: border-box;
+    border-radius: 10px;
+  }
+
+  #cookie-img {
+    height: auto;
     cursor: pointer;
     transition: opacity 0.6s ease;
-    user-select: none;
   }
 
   #cookie-img.hidden {
@@ -72,19 +79,14 @@
   }
 
   /* Spruch */
-  .fortune-strip {
-    max-width: 700px;
+  #fortune {
     background: var(--accent);
     border: 1px solid #ddd;
     padding: 1.5em 2em;
-    border-radius: 10px;
     box-shadow: 2px 2px 8px rgba(0,0,0,0.08);
     font-size: 1.3rem;
     font-weight: 500;
     color: var(--text);
-    text-align: center;
-    margin-top: 2em;
-    box-sizing: border-box;
     opacity: 0;
     max-height: 0;
     overflow: hidden;
@@ -92,7 +94,7 @@
   }
 
   /* Sichtbar wenn geöffnet */
-  .fortune-strip.visible {
+  #fortune.visible {
     opacity: 1;
     max-height: 300px;
   }
@@ -118,16 +120,18 @@
   }
 
   @media (max-width: 480px) {
-    .fortune-strip {
+    #cookie-img, 
+    #fortune {
+      width: 240px;
+      margin: 2em auto 0.5em auto;
+    }
+    #fortune {
       font-size: 1.1rem;
       padding: 1em;
     }
     .top-message {
       font-size: 0.95rem;
       padding: 1em;
-    }
-    #cookie-img {
-      width: 240px;
     }
   }
 </style>
@@ -194,7 +198,7 @@
     // Bild & Text ausblenden
     cookieImg.classList.add('hidden');
     clickText.classList.add('hidden');
-    // Spruch anzeigen
+    // Spruch anzeigen an gleicher Stelle
     fortuneDiv.textContent = dailyFortune;
     fortuneDiv.classList.add('visible');
   });
