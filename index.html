@@ -43,15 +43,14 @@
     margin: 0.5em 0;
   }
 
-  /* Container für Bild und Spruch */
+  /* Container für Bild, Klick-Text und Spruch */
   #cookie-container {
     width: 500px;
     margin: 3em auto;
     position: relative;
-    height: auto;
-    min-height: 350px; /* ungefähr Bildhöhe + padding */
+    min-height: 350px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     box-sizing: border-box;
   }
@@ -63,9 +62,8 @@
     cursor: pointer;
     transition: opacity 0.6s ease;
     user-select: none;
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: relative; /* jetzt nicht mehr absolut */
+    z-index: 2;
   }
 
   #cookie-img.hidden {
@@ -73,7 +71,23 @@
     pointer-events: none;
   }
 
-  /* Spruch - an gleicher Position wie Bild */
+  /* Klick mich Text */
+  #click-text {
+    font-size: 1rem;
+    color: #666;
+    margin-top: 0.5em;
+    margin-bottom: 1em;
+    transition: opacity 0.6s ease;
+    user-select: none;
+    z-index: 3;
+  }
+
+  #click-text.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Spruch */
   #fortune {
     position: absolute;
     top: 0;
@@ -93,27 +107,13 @@
     overflow: hidden;
     transition: opacity 0.8s ease, max-height 0.8s ease;
     user-select: text;
+    z-index: 5;
   }
 
   #fortune.visible {
     opacity: 1;
     max-height: 300px;
-    position: relative; /* damit es den Container nicht überlappt, sondern komplett zeigt */
-  }
-
-  /* Klick mich Text */
-  #click-text {
-    font-size: 1rem;
-    color: #666;
-    margin-top: 0.5em;
-    margin-bottom: 1em;
-    transition: opacity 0.6s ease;
-    user-select: none;
-  }
-
-  #click-text.hidden {
-    opacity: 0;
-    pointer-events: none;
+    position: relative; /* damit es den Container nicht überlappt */
   }
 
   /* Kontakt unten rechts fixieren */
@@ -164,13 +164,12 @@
     <p>This message is linked to a handmade ceramic fortune cookie. It changes every day and reveals a new fortune.</p>
   </div>
 
-  <!-- Container mit Bild und Spruch -->
+  <!-- Container mit Bild, Klick-Text und Spruch -->
   <div id="cookie-container">
     <img src="Glückskeks.png" alt="Glückskeks" id="cookie-img" />
+    <p id="click-text">Klick mich, um deinen Spruch zu sehen!</p>
     <div class="fortune-strip" id="fortune">Klick den Keks, um deinen Spruch zu sehen!</div>
   </div>
-
-  <p id="click-text">Klick mich, um deinen Spruch zu sehen!</p>
 
   <!-- Kontakt -->
   <div class="footer">
