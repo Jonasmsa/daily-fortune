@@ -5,25 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Täglicher Glückskeks</title>
   <style>
+    :root {
+      --bg: #fef8ef;
+      --text: #222;
+      --light: #fff;
+      --accent: #fffdf6;
+    }
+
     body {
       font-family: 'Georgia', serif;
       margin: 0;
-      background: #fef8ef;
+      padding: 0 1em;
+      background: var(--bg);
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       min-height: 100vh;
+      box-sizing: border-box;
     }
 
     .top-message {
       width: 100%;
-      background: #fff;
-      padding: 1.5em 2em;
+      max-width: 700px;
+      background: var(--light);
+      padding: 1.5em;
       box-shadow: 0 2px 6px rgba(0,0,0,0.05);
       font-size: 1rem;
       color: #444;
       text-align: center;
+      margin-top: 1em;
+      border-radius: 10px;
+      box-sizing: border-box;
     }
 
     .top-message p {
@@ -31,26 +44,36 @@
     }
 
     .fortune-strip {
-      background: #fffdf6;
+      background: var(--accent);
       border: 1px solid #ddd;
-      padding: 1em 2em;
-      border-radius: 8px;
+      padding: 1.2em 1.5em;
+      border-radius: 10px;
       box-shadow: 2px 2px 8px rgba(0,0,0,0.08);
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       font-weight: 500;
-      color: #222;
+      color: var(--text);
       max-width: 90%;
       text-align: center;
-      margin-top: 3em;
+      margin-top: 2.5em;
+      box-sizing: border-box;
+      opacity: 0;
+      animation: fadeIn 1.2s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
     }
 
     .footer {
-      position: fixed;
-      bottom: 10px;
-      right: 20px;
+      width: 100%;
+      max-width: 700px;
+      padding: 1em;
       font-size: 0.85rem;
       color: #666;
       text-align: right;
+      box-sizing: border-box;
     }
 
     .footer a {
@@ -60,6 +83,18 @@
 
     .footer a:hover {
       text-decoration: underline;
+    }
+
+    @media (max-width: 480px) {
+      .fortune-strip {
+        font-size: 1.1rem;
+        padding: 1em;
+      }
+
+      .top-message {
+        font-size: 0.95rem;
+        padding: 1em;
+      }
     }
   </style>
 </head>
@@ -101,7 +136,6 @@
       "Hilf mir, ich bin in einer Glückskeks-Fabrik gefangen!"
     ];
 
-    // Verwende das aktuelle Datum als Seed
     const today = new Date().toISOString().slice(0, 10);
     const seed = parseInt(today.replace(/-/g, ""), 10);
 
@@ -113,7 +147,8 @@
     const index = Math.floor(seededRandom(seed) * fortunes.length);
     const fortune = fortunes[index];
 
-    document.getElementById("fortune").textContent = fortune;
+    const fortuneElement = document.getElementById("fortune");
+    fortuneElement.textContent = fortune;
   </script>
 
 </body>
