@@ -12,6 +12,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
       min-height: 100vh;
     }
 
@@ -38,59 +39,5 @@
       font-size: 1.4rem;
       font-weight: 500;
       color: #222;
-      position: relative;
       max-width: 90%;
       text-align: center;
-      margin-top: 4em;
-    }
-
-    .fortune-strip::before,
-    .fortune-strip::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      width: 20px;
-      height: 20px;
-      background: #fffdf6;
-      border: 1px solid #ddd;
-      border-radius: 50%;
-      box-shadow: 1px 1px 5px rgba(0,0,0,0.05);
-    }
-
-    .fortune-strip::before {
-      left: -15px;
-      transform: translateY(-50%);
-    }
-
-    .fortune-strip::after {
-      right: -15px;
-      transform: translateY(-50%);
-    }
-
-    .footer {
-      position: fixed;
-      bottom: 10px;
-      right: 20px;
-      font-size: 0.85rem;
-      color: #666;
-      text-align: right;
-    }
-
-    .footer a {
-      color: #666;
-      text-decoration: none;
-    }
-
-    .footer a:hover {
-      text-decoration: underline;
-    }
-  </style>
-</head>
-<body>
-
-  <div class="top-message">
-    <p>Diese Botschaft gehört zu einem handgemachten Keramik-Glückskeks. Sie ändert sich täglich und enthält jeden Tag einen neuen Spruch.</p>
-    <p>This message is linked to a handmade ceramic fortune cookie. It changes every day and reveals a new fortune.</p>
-  </div>
-
-  <div class="fortune-strip" id="fortune">
