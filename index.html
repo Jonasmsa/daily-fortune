@@ -65,4 +65,31 @@
       "Wer viel anfängt, muss auch viel zu Ende bringen",
       "Der Friedhof der guten Ideen ist mehr als überfüllt.",
       "Es ist ein großer Vorteil im Leben, die Fehler, aus denen man lernen kann, möglichst früh zu begehen.",
-      "When everything seems
+      "When everything seems to be going against you, remember that the aeroplane takes off against the wind, not with it.",
+      "Mit einem Brunnenfrosch kann man nicht über den Ozean reden, er ist beschränkt auf sein Loch.",
+      "Wer guckt will auch was sehen.",
+      "Frühstück ist dann, wenn man aufsteht.",
+      "Alles passiert immer aus einem bestimmten Hund ☝🏻🐶",
+      "Wer zuletzt lacht, steht auf der Leitung.",
+      "Warning: The person behind you is secretly plotting to steal your cookie.",
+      "⁠Error: Fortune not found. Try reloading your cookie.",
+      "Nicht zum Verzehr geeignet",
+      "Wir können die Richtung des Windes nicht ändern, aber wir können die Segel anders setzen.",
+      "Hilf mir, ich bin in einer Glückskeks-Fabrik gefangen!"
+    ];
+
+    const today = new Date().toISOString().slice(0, 10);
+    let seed = today.split("-").join("");
+
+    function seededRandom(seed) {
+      let x = Math.sin(seed) * 10000;
+      return x - Math.floor(x);
+    }
+
+    const index = Math.floor(seededRandom(seed) * fortunes.length);
+    const fortune = fortunes[index];
+
+    document.getElementById("fortune").textContent = fortune;
+  </script>
+</body>
+</html>
