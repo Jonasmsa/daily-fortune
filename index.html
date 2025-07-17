@@ -48,11 +48,8 @@
     width: 500px;
     margin: 3em auto;
     position: relative;
-    min-height: 350px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     box-sizing: border-box;
+    height: auto; /* Höhe definiert sich über Bildhöhe */
   }
 
   /* Bild */
@@ -62,13 +59,13 @@
     cursor: pointer;
     transition: opacity 0.6s ease;
     user-select: none;
-    position: relative; /* jetzt nicht mehr absolut */
+    position: relative;
     z-index: 2;
+    display: block;
   }
 
   #cookie-img.hidden {
-    opacity: 0;
-    pointer-events: none;
+    display: none; /* komplett aus dem Layout */
   }
 
   /* Klick mich Text */
@@ -79,12 +76,11 @@
     margin-bottom: 1em;
     transition: opacity 0.6s ease;
     user-select: none;
-    z-index: 3;
+    text-align: center;
   }
 
   #click-text.hidden {
-    opacity: 0;
-    pointer-events: none;
+    display: none;
   }
 
   /* Spruch */
@@ -93,7 +89,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    padding: 1.5em 2em;
+    height: 100%; /* gleiche Höhe wie Container / Bild */
     background: var(--accent);
     border: 1px solid #ddd;
     border-radius: 10px;
@@ -102,18 +98,21 @@
     font-weight: 500;
     color: var(--text);
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5em 2em;
+    box-sizing: border-box;
     opacity: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: opacity 0.8s ease, max-height 0.8s ease;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
     user-select: text;
     z-index: 5;
   }
 
   #fortune.visible {
     opacity: 1;
-    max-height: 300px;
-    position: relative; /* damit es den Container nicht überlappt */
+    pointer-events: auto;
   }
 
   /* Kontakt unten rechts fixieren */
@@ -140,7 +139,6 @@
     #cookie-container {
       width: 240px;
       margin: 2em auto;
-      min-height: 180px;
     }
     #cookie-img {
       width: 100%;
@@ -148,7 +146,6 @@
     #fortune {
       font-size: 1.1rem;
       padding: 1em;
-      max-height: 200px;
     }
     .top-message {
       font-size: 0.95rem;
