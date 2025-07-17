@@ -15,7 +15,7 @@
     body {
       font-family: 'Georgia', serif;
       margin: 0;
-      padding: 0 1em; /* Seitenabstände */
+      padding: 0 1em;
       background: var(--bg);
       display: flex;
       flex-direction: column;
@@ -23,6 +23,7 @@
       justify-content: flex-start;
       min-height: 100vh;
       box-sizing: border-box;
+      position: relative;
     }
 
     .top-message {
@@ -53,6 +54,7 @@
       position: relative;
       transition: transform 0.3s ease;
       margin: 2em 0 1em 0;
+      user-select: none;
     }
 
     .cookie::before, .cookie::after {
@@ -117,7 +119,7 @@
       box-sizing: border-box;
       opacity: 0;
       transition: opacity 1s ease-in;
-      min-height: 3.5em; /* Platz halten */
+      min-height: 3.5em; /* Platzhalter */
       user-select: none;
     }
 
@@ -126,13 +128,14 @@
     }
 
     .footer {
-      width: 100%;
-      max-width: 700px;
-      padding: 1em;
+      position: fixed;
+      bottom: 10px;
+      right: 20px;
       font-size: 0.85rem;
       color: #666;
       text-align: right;
-      box-sizing: border-box;
+      user-select: none;
+      max-width: 300px;
     }
 
     .footer a {
@@ -223,11 +226,12 @@
     const fortuneDiv = document.getElementById('fortune');
     const instructions = document.getElementById('instructions');
 
-    // Initial verstecken
+    // Spruch zuerst unsichtbar
     fortuneDiv.style.opacity = '0';
 
     cookie.addEventListener('click', () => {
       cookie.classList.add('breaking');
+      cookie.style.pointerEvents = 'none'; // Doppelklick verhindern
 
       setTimeout(() => {
         cookie.style.display = 'none';
