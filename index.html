@@ -25,6 +25,10 @@
       text-align: center;
     }
 
+    .top-message p {
+      margin: 0.5em 0;
+    }
+
     .container {
       max-width: 700px;
       padding: 2em;
@@ -41,13 +45,22 @@
       font-weight: bold;
       color: #333;
     }
+
+    .footer {
+      position: fixed;
+      bottom: 10px;
+      right: 20px;
+      font-size: 0.9rem;
+      color: #666;
+      text-align: right;
+    }
   </style>
 </head>
 <body>
   <div class="top-message">
-  <p>Diese Botschaft gehört zu einem handgemachten Keramik-Glückskeks. Sie ändert sich täglich und enthält jeden Tag einen neuen Spruch.</p>
-  <p>This message is linked to a handmade ceramic fortune cookie. It changes every day and reveals a new fortune.</p>
-</div>
+    <p>Diese Botschaft gehört zu einem handgemachten Keramik-Glückskeks. Sie ändert sich täglich und enthält jeden Tag einen neuen Spruch.</p>
+    <p>This message is linked to a handmade ceramic fortune cookie. It changes every day and reveals a new fortune.</p>
+  </div>
 
   <div class="container">
     <div class="fortune" id="fortune">
@@ -55,10 +68,15 @@
     </div>
   </div>
 
+  <div class="footer">
+    Max Mustermann<br>
+    kontakt@example.com
+  </div>
+
   <script>
     const fortunes = [
       "Sie haben keine Probleme",
-      "Was hast du hier drin erwartet?",
+      "Was hast du hier drin erwartet? 😂",
       "Der Sinn hat keinen Satz gemacht",
       "Wenn die Affen steigen, gibt’s Regenwetter",
       "Wer viel anfängt, muss auch viel zu Ende bringen",
@@ -92,3 +110,4 @@
   </script>
 </body>
 </html>
+
