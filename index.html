@@ -45,15 +45,28 @@
 
   /* Glückskeks Bild */
   #cookie-img {
-    width: 200px;
+    width: 300px;
     height: auto;
-    margin: 3em auto 1em auto;
+    margin: 3em auto 0.5em auto;
     cursor: pointer;
     transition: opacity 0.6s ease;
     user-select: none;
   }
 
   #cookie-img.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Klick mich Text */
+  #click-text {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 1em;
+    transition: opacity 0.6s ease;
+  }
+
+  #click-text.hidden {
     opacity: 0;
     pointer-events: none;
   }
@@ -126,11 +139,14 @@
     <p>This message is linked to a handmade ceramic fortune cookie. It changes every day and reveals a new fortune.</p>
   </div>
 
-  <!-- Hier Pfad zum Bild anpassen -->
+  <!-- Glückskeksbild und "Klick mich"-Text -->
   <img src="Glückskeks.png" alt="Glückskeks" id="cookie-img" />
+  <p id="click-text">Klick mich 🍪</p>
 
+  <!-- Spruch -->
   <div class="fortune-strip" id="fortune">Klick den Keks, um deinen Spruch zu sehen!</div>
 
+  <!-- Kontakt -->
   <div class="footer">
     Jonas Saling<br>
     <a href="mailto:jonas.m.saling@gmail.com">jonas.m.saling@gmail.com</a>
@@ -160,6 +176,7 @@
 
   const fortuneDiv = document.getElementById('fortune');
   const cookieImg = document.getElementById('cookie-img');
+  const clickText = document.getElementById('click-text');
 
   // Seed für Tages-Spruch (Datum als Zahl)
   const today = new Date().toISOString().slice(0, 10);
@@ -174,9 +191,10 @@
   const dailyFortune = fortunes[index];
 
   cookieImg.addEventListener('click', () => {
-    // Bild ausblenden
+    // Bild & Text ausblenden
     cookieImg.classList.add('hidden');
-    // Spruch einblenden
+    clickText.classList.add('hidden');
+    // Spruch anzeigen
     fortuneDiv.textContent = dailyFortune;
     fortuneDiv.classList.add('visible');
   });
