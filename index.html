@@ -6,9 +6,9 @@
   <title>Täglicher Glückskeks</title>
   <style>
     body {
-      font-family: sans-serif;
+      font-family: 'Georgia', serif;
       margin: 0;
-      background: #f0f8ff;
+      background: #fef8ef;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -18,10 +18,10 @@
     .top-message {
       width: 100%;
       background: #fff;
-      padding: 1em 2em;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 1.5em 2em;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
       font-size: 1rem;
-      color: #555;
+      color: #444;
       text-align: center;
     }
 
@@ -29,85 +29,68 @@
       margin: 0.5em 0;
     }
 
-    .container {
-      max-width: 700px;
-      padding: 2em;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    .fortune-strip {
+      background: #fffdf6;
+      border: 1px solid #ddd;
+      padding: 1em 2em;
+      border-radius: 8px;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.08);
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: #222;
+      position: relative;
+      max-width: 90%;
       text-align: center;
-      margin-top: auto;
-      margin-bottom: auto;
+      margin-top: 4em;
     }
 
-    .fortune {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #333;
+    .fortune-strip::before,
+    .fortune-strip::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 20px;
+      height: 20px;
+      background: #fffdf6;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      box-shadow: 1px 1px 5px rgba(0,0,0,0.05);
+    }
+
+    .fortune-strip::before {
+      left: -15px;
+      transform: translateY(-50%);
+    }
+
+    .fortune-strip::after {
+      right: -15px;
+      transform: translateY(-50%);
     }
 
     .footer {
       position: fixed;
       bottom: 10px;
       right: 20px;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: #666;
       text-align: right;
+    }
+
+    .footer a {
+      color: #666;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
+
   <div class="top-message">
     <p>Diese Botschaft gehört zu einem handgemachten Keramik-Glückskeks. Sie ändert sich täglich und enthält jeden Tag einen neuen Spruch.</p>
     <p>This message is linked to a handmade ceramic fortune cookie. It changes every day and reveals a new fortune.</p>
   </div>
 
-  <div class="container">
-    <div class="fortune" id="fortune">
-      Loading your daily fortune...
-    </div>
-  </div>
-
-  <div class="footer">
-    Jonas Saling<br>
-    jonas.m.saling@gmail.com
-  </div>
-
-  <script>
-    const fortunes = [
-      "Sie haben keine Probleme",
-      "Was hast du hier drin erwartet? 😂",
-      "Der Sinn hat keinen Satz gemacht",
-      "Wenn die Affen steigen, gibt’s Regenwetter",
-      "Wer viel anfängt, muss auch viel zu Ende bringen",
-      "Der Friedhof der guten Ideen ist mehr als überfüllt.",
-      "Es ist ein großer Vorteil im Leben, die Fehler, aus denen man lernen kann, möglichst früh zu begehen.",
-      "When everything seems to be going against you, remember that the aeroplane takes off against the wind, not with it.",
-      "Mit einem Brunnenfrosch kann man nicht über den Ozean reden, er ist beschränkt auf sein Loch.",
-      "Wer guckt will auch was sehen.",
-      "Frühstück ist dann, wenn man aufsteht.",
-      "Alles passiert immer aus einem bestimmten Hund ☝🏻🐶",
-      "Wer zuletzt lacht, steht auf der Leitung.",
-      "Warning: The person behind you is secretly plotting to steal your cookie.",
-      "⁠Error: Fortune not found. Try reloading your cookie.",
-      "Nicht zum Verzehr geeignet",
-      "Wir können die Richtung des Windes nicht ändern, aber wir können die Segel anders setzen.",
-      "Hilf mir, ich bin in einer Glückskeks-Fabrik gefangen!"
-    ];
-
-    const today = new Date().toISOString().slice(0, 10);
-    let seed = today.split("-").join("");
-
-    function seededRandom(seed) {
-      let x = Math.sin(seed) * 10000;
-      return x - Math.floor(x);
-    }
-
-    const index = Math.floor(seededRandom(seed) * fortunes.length);
-    const fortune = fortunes[index];
-
-    document.getElementById("fortune").textContent = fortune;
-  </script>
-</body>
-</html>
-
+  <div class="fortune-strip" id="fortune">
