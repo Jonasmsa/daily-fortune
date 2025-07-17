@@ -43,21 +43,29 @@
     margin: 0.5em 0;
   }
 
-  /* Bild und Spruch - gleiche Größe und Margin */
-  #cookie-img, 
-  #fortune {
+  /* Container für Bild und Spruch */
+  #cookie-container {
     width: 500px;
-    margin: 3em auto; /* oben und unten 3em Abstand */
-    user-select: none;
-    text-align: center;
+    margin: 3em auto;
+    position: relative;
+    height: auto;
+    min-height: 350px; /* ungefähr Bildhöhe + padding */
+    display: flex;
+    justify-content: center;
+    align-items: center;
     box-sizing: border-box;
-    border-radius: 10px;
   }
 
+  /* Bild */
   #cookie-img {
+    width: 100%;
     height: auto;
     cursor: pointer;
     transition: opacity 0.6s ease;
+    user-select: none;
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 
   #cookie-img.hidden {
@@ -65,38 +73,47 @@
     pointer-events: none;
   }
 
+  /* Spruch - an gleicher Position wie Bild */
+  #fortune {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1.5em 2em;
+    background: var(--accent);
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.08);
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--text);
+    text-align: center;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.8s ease, max-height 0.8s ease;
+    user-select: text;
+  }
+
+  #fortune.visible {
+    opacity: 1;
+    max-height: 300px;
+    position: relative; /* damit es den Container nicht überlappt, sondern komplett zeigt */
+  }
+
   /* Klick mich Text */
   #click-text {
     font-size: 1rem;
     color: #666;
+    margin-top: 0.5em;
     margin-bottom: 1em;
     transition: opacity 0.6s ease;
+    user-select: none;
   }
 
   #click-text.hidden {
     opacity: 0;
     pointer-events: none;
-  }
-
-  /* Spruch Styling */
-  .fortune-strip {
-    background: var(--accent);
-    border: 1px solid #ddd;
-    padding: 1.5em 2em;
-    box-shadow: 2px 2px 8px rgba(0,0,0,0.08);
-    font-size: 1.3rem;
-    font-weight: 500;
-    color: var(--text);
-    opacity: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: opacity 0.8s ease, max-height 0.8s ease;
-  }
-
-  /* Sichtbar wenn geöffnet */
-  .fortune-strip.visible {
-    opacity: 1;
-    max-height: 300px;
   }
 
   /* Kontakt unten rechts fixieren */
@@ -120,14 +137,18 @@
   }
 
   @media (max-width: 480px) {
-    #cookie-img, 
-    #fortune {
+    #cookie-container {
       width: 240px;
       margin: 2em auto;
+      min-height: 180px;
     }
-    .fortune-strip {
+    #cookie-img {
+      width: 100%;
+    }
+    #fortune {
       font-size: 1.1rem;
       padding: 1em;
+      max-height: 200px;
     }
     .top-message {
       font-size: 0.95rem;
@@ -143,12 +164,13 @@
     <p>This message is linked to a handmade ceramic fortune cookie. It changes every day and reveals a new fortune.</p>
   </div>
 
-  <!-- Glückskeksbild und "Klick mich"-Text -->
-  <img src="Glückskeks.png" alt="Glückskeks" id="cookie-img" />
-  <p id="click-text">Klick mich, um deinen Spruch zu sehen!</p>
+  <!-- Container mit Bild und Spruch -->
+  <div id="cookie-container">
+    <img src="Glückskeks.png" alt="Glückskeks" id="cookie-img" />
+    <div class="fortune-strip" id="fortune">Klick den Keks, um deinen Spruch zu sehen!</div>
+  </div>
 
-  <!-- Spruch -->
-  <div class="fortune-strip" id="fortune">Klick den Keks, um deinen Spruch zu sehen!</div>
+  <p id="click-text">Klick mich, um deinen Spruch zu sehen!</p>
 
   <!-- Kontakt -->
   <div class="footer">
@@ -195,10 +217,9 @@
   const dailyFortune = fortunes[index];
 
   cookieImg.addEventListener('click', () => {
-    // Bild & Text ausblenden
     cookieImg.classList.add('hidden');
     clickText.classList.add('hidden');
-    // Spruch anzeigen
+
     fortuneDiv.textContent = dailyFortune;
     fortuneDiv.classList.add('visible');
   });
