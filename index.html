@@ -212,22 +212,38 @@
     "<p>Schnitze das Leben aus dem Holz, das du hast. (Tolstoi)</p><p>Carve your life from the wood you have. (Tolstoi)</p>",
     "<p>Wenn man schon etwas bezahlen muss, dann lieber einen Arzt als einen Bestatter.</p><p>If you have to pay someone, better a doctor than a undertaker.</p>"
   ];
+const specialFortunesFixed = {
+  "12-24": "<p>Frohe Weihnachten 🎄</p><p>Merry Christmas 🎄</p>",
+  "01-01": "<p>Ein neues Jahr beginnt ✨</p><p>A new year begins ✨</p>",
+  "02-14": "<p>Liebe liegt in der Luft 💖</p><p>Love is in the air 💖</p>",
+  "06-21": "<p>Mittsommernacht 🌞</p><p>Midsummer Night 🌞</p>"
+};
 
   const fortuneDiv = document.getElementById('fortune');
   const cookieImg = document.getElementById('cookie-img');
   const clickText = document.getElementById('click-text');
 
   // Seed für Tages-Spruch (Datum als Zahl)
-  const today = new Date().toISOString().slice(0, 10);
-  const seed = parseInt(today.replace(/-/g, ''), 10);
+  const now = new Date();
+const todayISO = now.toISOString().slice(0, 10); // YYYY-MM-DD
+const monthDay = todayISO.slice(5); // MM-DD
+const seed = parseInt(todayISO.replace(/-/g, ''), 10);
 
   function seededRandom(seed) {
     const x = Math.sin(seed) * 10000;
     return x - Math.floor(x);
   }
 
+ let dailyFortune;
+
+if (specialFortunes[monthDay]) {
+  // Sondertag → fester Spruch
+  dailyFortune = specialFortunes[monthDay];
+} else {
+  // Normaler Tag → Zufall, aber tagesstabil
   const index = Math.floor(seededRandom(seed) * fortunes.length);
-  const dailyFortune = fortunes[index];
+  dailyFortune = fortunes[index];
+} 
 
   cookieImg.addEventListener('click', () => {
     // Bild & Klick-Text ausblenden
