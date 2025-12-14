@@ -238,7 +238,7 @@ const seed = parseInt(todayISO.replace(/-/g, ''), 10);
 
 if (specialFortunes[monthDay]) {
   // Sondertag → fester Spruch
-  dailyFortune = specialFortunes[monthDay];
+  dailyFortune = specialFortunesFixed[monthDay];
 } else {
   // Normaler Tag → Zufall, aber tagesstabil
   const index = Math.floor(seededRandom(seed) * fortunes.length);
