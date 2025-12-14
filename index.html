@@ -218,38 +218,41 @@ const specialFortunesFixed = {
   "02-14": "<p>Liebe liegt in der Luft 💖</p><p>Love is in the air 💖</p>",
   "06-21": "<p>Mittsommernacht 🌞</p><p>Midsummer Night 🌞</p>"
 };
-
-  const fortuneDiv = document.getElementById('fortune');
+const fortuneDiv = document.getElementById('fortune');
   const cookieImg = document.getElementById('cookie-img');
   const clickText = document.getElementById('click-text');
 
   // Seed für Tages-Spruch (Datum als Zahl)
   const now = new Date();
-const todayISO = now.toISOString().slice(0, 10); // YYYY-MM-DD
-const monthDay = todayISO.slice(5); // MM-DD
-const seed = parseInt(todayISO.replace(/-/g, ''), 10);
+  const todayISO = now.toISOString().slice(0, 10); // YYYY-MM-DD
+  const monthDay = todayISO.slice(5); // MM-DD
+  const seed = parseInt(todayISO.replace(/-/g, ''), 10);
 
   function seededRandom(seed) {
     const x = Math.sin(seed) * 10000;
     return x - Math.floor(x);
   }
 
- let dailyFortune;
+  let dailyFortune;
 
-if (specialFortunes[monthDay]) {
-  // Sondertag → fester Spruch
-  dailyFortune = specialFortunesFixed[monthDay];
-} else {
-  // Normaler Tag → Zufall, aber tagesstabil
-  const index = Math.floor(seededRandom(seed) * fortunes.length);
-  dailyFortune = fortunes[index];
-} 
+  if (specialFortunesFixed[monthDay]) {
+    // Sondertag → fester Spruch
+    dailyFortune = specialFortunesFixed[monthDay];
+  } else {
+    // Normaler Tag → Zufall, aber tagesstabil
+    const index = Math.floor(seededRandom(seed) * fortunes.length);
+    dailyFortune = fortunes[index];
+  }
 
+  // Fallback, falls aus irgendeinem Grund kein Spruch gewählt wurde
+  if (!dailyFortune) {
+    dailyFortune = "<p>Fehler: Kein Spruch gefunden.</p>";
+  }
+
+  // Klick-Event für den Keks
   cookieImg.addEventListener('click', () => {
-    // Bild & Klick-Text ausblenden
     cookieImg.classList.add('hidden');
     clickText.classList.add('hidden');
-    // Spruch anzeigen
     fortuneDiv.innerHTML = dailyFortune;
     fortuneDiv.classList.add('visible');
   });
